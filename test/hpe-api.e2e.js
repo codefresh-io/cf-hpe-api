@@ -2,7 +2,7 @@
 /* eslint-disable func-names */
 /* eslint-disable prefer-arrow-callback */
 import './config.env';
-import _ from 'lodash';
+import R from 'ramda';
 import util from 'util';
 import { expect } from 'chai';
 import { HpeApi, HpeApiPipeline } from 'cf-hpe-api';
@@ -27,7 +27,7 @@ describe('HpeApi', function () {
       pipelineId: testData.pipelineId,
       buildId: testData.rootJobBuildId,
       startTime: testData.rootJobStartTime,
-      duration: _.now() - testData.rootJobStartTime,
+      duration: Date.now() - testData.rootJobStartTime,
       status,
       result,
     };
@@ -51,8 +51,8 @@ describe('HpeApi', function () {
   });
 
   it('Should create a CI server', function (done) {
-    const serverName = util.format('Codefresh %d', _.now());
-    const serverInstanceId = _.kebabCase(serverName);
+    const serverName = util.format('Codefresh %d', Date.now());
+    const serverInstanceId = R.toLower(serverName);
 
     const server = {
       instanceId: serverInstanceId,
@@ -88,8 +88,8 @@ describe('HpeApi', function () {
   });
 
   it('Should create a CI server pipeline ', function (done) {
-    const pipelineName = util.format('Pipeline %d', _.now());
-    const pipelineId = _.kebabCase(pipelineName);
+    const pipelineName = util.format('Pipeline %d', Date.now());
+    const pipelineId = R.toLower(pipelineName);
 
     const pipeline = {
       id: pipelineId,
@@ -124,8 +124,8 @@ describe('HpeApi', function () {
   });
 
   it('Should report pipeline status as "running"', function (done) {
-    const buildName = util.format('Build %d', _.now());
-    const buildId = _.kebabCase(buildName);
+    const buildName = util.format('Build %d', Date.now());
+    const buildId = R.toLower(buildName);
 
     const stepStatus = {
       stepId: 'pipeline',
@@ -133,7 +133,7 @@ describe('HpeApi', function () {
       pipelineId: testData.pipelineId,
       buildId,
       buildName,
-      startTime: _.now(),
+      startTime: Date.now(),
       duration: undefined,
       status: 'running',
       result: 'unavailable',
@@ -187,7 +187,7 @@ describe('HpeApi', function () {
       testRuns: [
         {
           testName: 'Should pass unit test #1',
-          started: _.now(),
+          started: Date.now(),
           duration: 1000,
           status: 'Passed',
           package: 'cf-hpe',
@@ -212,7 +212,7 @@ describe('HpeApi', function () {
       testRuns: [
         {
           testName: 'Should pass unit test #2',
-          started: _.now(),
+          started: Date.now(),
           duration: 1000,
           status: 'Failed',
           package: 'cf-hpe',
@@ -237,7 +237,7 @@ describe('HpeApi', function () {
       testRuns: [
         {
           testName: 'Should pass integration test #1',
-          started: _.now(),
+          started: Date.now(),
           duration: 1000,
           status: 'Passed',
           package: 'cf-hpe',
@@ -262,7 +262,7 @@ describe('HpeApi', function () {
       testRuns: [
         {
           testName: 'Should pass integration test #2',
-          started: _.now(),
+          started: Date.now(),
           duration: 1000,
           status: 'Failed',
           package: 'cf-hpe',
@@ -285,7 +285,7 @@ describe('HpeApi', function () {
       pipelineId: testData.pipelineId,
       buildId: testData.rootJobBuildId,
       startTime: testData.rootJobStartTime,
-      duration: _.now() - testData.rootJobStartTime,
+      duration: Date.now() - testData.rootJobStartTime,
       status: 'finished',
       result: 'success',
     };
