@@ -1,5 +1,5 @@
 {
-  "name": "cf-hpe",
+  "name": "cf-hpe-api",
   "version": "0.0.3",
   "private": true,
   "files": [
