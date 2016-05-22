@@ -30,6 +30,7 @@
     "gulp-babel": "^6.1.2",
     "gulp-bump": "^2.1.0",
     "gulp-eslint": "^2.0.0",
+    "gulp-git": "^1.7.1",
     "gulp-mocha": "^2.2.0",
     "gulp-process-env": "0.0.1",
     "mocha": "^2.4.5",

@@ -3,6 +3,7 @@ import eslint from 'gulp-eslint';
 import babel from 'gulp-babel';
 import mocha from 'gulp-mocha';
 import bump from 'gulp-bump';
+import git from 'gulp-git';
 import runSequence from 'run-sequence';
 import del from 'del';
 
@@ -29,6 +30,14 @@ gulp.task('build', ['clean'], () =>
   gulp.src(['src/**/*.js'])
     .pipe(babel())
     .pipe(gulp.dest('dist')));
+
+gulp.task('commit-changes', () =>
+  gulp.src('.')
+    .pipe(git.add())
+    .pipe(git.commit('[Prerelease] Bumped version number')));
+
+gulp.task('push-changes', (callback) =>
+  git.push('origin', 'master', callback));
 
 gulp.task('release', callback => {
   runSequence(
