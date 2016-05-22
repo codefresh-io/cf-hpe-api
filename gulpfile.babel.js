@@ -31,10 +31,10 @@ gulp.task('build', ['clean'], () =>
     .pipe(babel())
     .pipe(gulp.dest('dist')));
 
-gulp.task('git-commit', () =>
+gulp.task('git-commit-build', () =>
   gulp.src('.')
     .pipe(git.add())
-    .pipe(git.commit('Pre-release')));
+    .pipe(git.commit('Build')));
 
 gulp.task('git-push-develop', (callback) =>
   git.push('origin', 'develop', callback));
@@ -42,7 +42,7 @@ gulp.task('git-push-develop', (callback) =>
 gulp.task('release', callback => {
   runSequence(
     'build',
-    'git-commit',
+    'git-commit-build',
     'git-push-develop',
     callback);
 });
