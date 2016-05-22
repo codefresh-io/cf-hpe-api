@@ -31,13 +31,13 @@ gulp.task('build', ['clean'], () =>
     .pipe(babel())
     .pipe(gulp.dest('dist')));
 
-gulp.task('commit-changes', () =>
+gulp.task('git-commit', () =>
   gulp.src('.')
     .pipe(git.add())
-    .pipe(git.commit('[Prerelease] Bumped version number')));
+    .pipe(git.commit('Pre-release')));
 
-gulp.task('push-changes', (callback) =>
-  git.push('origin', 'master', callback));
+gulp.task('git-push-develop', (callback) =>
+  git.push('origin', 'develop', callback));
 
 gulp.task('release', callback => {
   runSequence(
