@@ -1,0 +1,12 @@
+{
+  "presets": ["es2015"],
+  "plugins": [
+    [
+      "module-alias", [
+      {"src": "./src", "expose": "cf-hpe-api"},
+      {"src": "./src/lib", "expose": "lib"}
+    ]
+    ],
+    "transform-object-rest-spread"
+  ]
+}
