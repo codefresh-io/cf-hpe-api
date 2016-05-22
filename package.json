@@ -5,10 +5,8 @@
   "files": [
     "dist"
   ],
-  "scripts": {
-    "lint": "gulp lint",
-    "test": "gulp test"
-  },
+  "main": "dist",
+  "scripts": {},
   "dependencies": {
     "12factor-config": "^1.1.0",
     "ramda": "^0.21.0",
