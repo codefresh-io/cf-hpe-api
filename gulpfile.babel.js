@@ -36,7 +36,6 @@ gulp.task('build', ['clean'], () =>
 gulp.task('release', callback => {
   runSequence(
     'bump-version',
-    'clean',
     'build',
     callback);
 });
