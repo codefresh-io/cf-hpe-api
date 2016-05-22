@@ -9,6 +9,7 @@
   "scripts": {},
   "dependencies": {
     "12factor-config": "^1.1.0",
+    "immutable": "^3.8.1",
     "ramda": "^0.21.0",
     "request": "^2.72.0",
     "rx": "^4.1.0",
