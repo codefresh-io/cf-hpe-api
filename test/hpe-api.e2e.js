@@ -134,7 +134,7 @@ describe('HpeApi', function () {
       buildId,
       buildName,
       startTime: Date.now(),
-      duration: undefined,
+      duration: 0,
       status: 'running',
       result: 'unavailable',
     };

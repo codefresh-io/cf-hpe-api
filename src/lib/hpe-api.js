@@ -40,6 +40,7 @@ HpeApi.connect = () => {
       const sessionRequest = signInRequest.defaults({
         headers: {
           'HPSSO-HEADER-CSRF': csrfToken,
+          HPECLIENTTYPE: 'HPE_CI_CLIENT',
         },
       });
 
@@ -134,7 +135,10 @@ HpeApi.createPipeline = (session, pipeline) => {
           JSON.stringify(response.body, null, 2));
       }
 
-      return _.assign({}, response.body.data[0], data);
+      return {
+        ...data,
+        ...response.body.data[0],
+      };
     });
 };
 
@@ -177,7 +181,10 @@ HpeApi.reportPipelineStepStatus = (session, stepStatus) => {
           JSON.stringify(response.body, null, 2));
       }
 
-      return _.assign({}, response.body, data);
+      return {
+        ...data,
+        ...response.body,
+      };
     });
 };
 
@@ -226,6 +233,9 @@ HpeApi.reportPipelineTestResults = (session, testResult) => {
           JSON.stringify(response.body, null, 2));
       }
 
-      return _.assign({}, response.body, data);
+      return {
+        ...data,
+        ...response.body,
+      };
     });
 };

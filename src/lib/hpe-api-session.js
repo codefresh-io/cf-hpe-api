@@ -10,3 +10,13 @@ HpeApiSession.create = (request, config) => new HpeApiSession({
   request,
   config,
 });
+
+export const HpeApiBuildSession = Record({
+  request: null,
+  config: null,
+});
+
+HpeApiBuildSession.create = (request, config) => new HpeApiSession({
+  request,
+  config,
+});
