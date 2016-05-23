@@ -5,7 +5,7 @@ import './config.env';
 import R from 'ramda';
 import util from 'util';
 import { expect } from 'chai';
-import { HpeApi, HpeApiPipeline } from 'cf-hpe-api';
+import { HpeApiSession, HpeApiBuildSession, HpeApiPipeline } from 'cf-hpe-api';
 
 describe('HpeApi', function () {
   this.slow(5000);
@@ -21,7 +21,7 @@ describe('HpeApi', function () {
   const makeId = R.compose(R.toLower, (R.replace(' ', '-')));
 
   function reportPipelineStepStatusHelper(test, stepId, status, result, done) {
-    HpeApi
+    HpeApiBuildSession
       .reportBuildPipelineStepStatus(
         test.buildSession,
         stepId,
@@ -35,8 +35,8 @@ describe('HpeApi', function () {
   }
 
   it('Should create a session', function (done) {
-    HpeApi
-      .createSession()
+    HpeApiSession
+      .create()
       .subscribe(
         session => {
           this.session = session;
@@ -49,7 +49,7 @@ describe('HpeApi', function () {
     const ciServerName = util.format('Codefresh %d', Date.now());
     const ciServerId = makeId(ciServerName);
 
-    HpeApi
+    HpeApiSession
       .createCiServer(this.session, ciServerId, ciServerName)
       .subscribe(
         response => {
@@ -66,7 +66,7 @@ describe('HpeApi', function () {
   });
 
   it('Should find a CI server', function (done) {
-    HpeApi
+    HpeApiSession
       .findCiServer(this.session, this.ciServerId)
       .subscribe(
         response => {
@@ -81,7 +81,7 @@ describe('HpeApi', function () {
     const pipelineName = util.format('Pipeline %d', Date.now());
     const pipelineId = makeId(pipelineName);
 
-    HpeApi
+    HpeApiSession
       .createPipeline(this.session, this.ciServerHpeId, pipelineId, pipelineName)
       .subscribe(
         response => {
@@ -111,7 +111,7 @@ describe('HpeApi', function () {
     const buildName = util.format('Build %d', Date.now());
     const buildId = makeId(buildName);
 
-    this.buildSession = HpeApi.createBuildSession(
+    this.buildSession = HpeApiBuildSession.create(
       this.session,
       this.ciServerId,
       this.pipelineId,
@@ -123,7 +123,7 @@ describe('HpeApi', function () {
   it('Should report pipeline status as "running"', function (done) {
     const buildStartTime = Date.now();
 
-    HpeApi
+    HpeApiBuildSession
       .reportBuildPipelineStepStatus(
         this.buildSession,
         'pipeline',
@@ -182,7 +182,7 @@ describe('HpeApi', function () {
       ],
     };
 
-    HpeApi
+    HpeApiBuildSession
       .reportBuildPipelineTestResults(this.buildSession, 'unit-test-script', testResult)
       .subscribe(() => done(),
         error => done(error));
@@ -203,7 +203,7 @@ describe('HpeApi', function () {
       ],
     };
 
-    HpeApi
+    HpeApiBuildSession
       .reportBuildPipelineTestResults(this.buildSession, 'unit-test-script', testResult)
       .subscribe(() => done(),
         error => done(error));
@@ -224,7 +224,7 @@ describe('HpeApi', function () {
       ],
     };
 
-    HpeApi
+    HpeApiBuildSession
       .reportBuildPipelineTestResults(this.buildSession, 'integration-test-script', testResult)
       .subscribe(() => done(),
         error => done(error));
@@ -245,14 +245,14 @@ describe('HpeApi', function () {
       ],
     };
 
-    HpeApi
+    HpeApiBuildSession
       .reportBuildPipelineTestResults(this.buildSession, 'integration-test-script', testResult)
       .subscribe(() => done(),
         error => done(error));
   });
 
   it('Should report pipeline status as "finished"', function (done) {
-    HpeApi
+    HpeApiBuildSession
       .reportBuildPipelineStepStatus(
         this.buildSession,
         'pipeline',
