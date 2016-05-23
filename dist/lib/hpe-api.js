@@ -135,7 +135,7 @@ var HpeApi = exports.HpeApi = function () {
         root_job_ci_id: pipelineJobs[0].jobCiId,
         ci_server: {
           type: 'ci_server',
-          id: pipeline.serverId
+          id: pipeline.ciServerHpeId
         },
         jobs: pipelineJobs
       };
@@ -163,7 +163,7 @@ var HpeApi = exports.HpeApi = function () {
       var rootJobCiId = _hpeApiPipeline.HpeApiPipeline.jobId(stepStatus.pipelineId, 'pipeline');
 
       var data = {
-        serverCiId: stepStatus.serverInstanceId,
+        serverCiId: stepStatus.ciServerId,
         jobCiId: jobCiId,
         buildCiId: stepStatus.buildId,
         buildName: stepStatus.buildName,
@@ -203,7 +203,7 @@ var HpeApi = exports.HpeApi = function () {
         test_result: {
           build: {
             $: {
-              server_id: testResult.serverInstanceId,
+              server_id: testResult.ciServerId,
               job_id: jobCiId,
               job_name: jobCiId,
               build_id: testResult.buildId,

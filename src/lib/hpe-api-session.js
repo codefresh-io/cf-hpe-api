@@ -12,11 +12,18 @@ HpeApiSession.create = (request, config) => new HpeApiSession({
 });
 
 export const HpeApiBuildSession = Record({
-  request: null,
-  config: null,
+  session: null,
+  ciServerId: null,
+  pipelineId: null,
+  buildId: null,
+  buildName: null,
 });
 
-HpeApiBuildSession.create = (request, config) => new HpeApiSession({
-  request,
-  config,
-});
+HpeApiBuildSession.create = (session, ciServerId, pipelineId, buildId, buildName) =>
+  new HpeApiBuildSession({
+    session,
+    ciServerId,
+    pipelineId,
+    buildId,
+    buildName,
+  });

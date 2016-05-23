@@ -36,26 +36,21 @@ const pipelineSteps = [
   },
 ];
 
-export class HpeApiPipeline {
-  static steps() {
-    return pipelineSteps;
-  }
+export const HpeApiPipeline = {};
 
-  static jobId(pipelineId, stepId) {
-    return util.format('%s-%s', pipelineId, stepId);
-  }
+HpeApiPipeline.steps = () => pipelineSteps;
 
-  static jobs(pipelineId) {
-    return _(HpeApiPipeline.steps())
-      .map(step => {
-        const result = {
-          jobCiId: HpeApiPipeline.jobId(pipelineId, step.id),
-          name: step.name,
-        };
+HpeApiPipeline.jobs = (pipelineId) =>
+  _(HpeApiPipeline.steps())
+    .map(step => {
+      const result = {
+        jobCiId: HpeApiPipeline.jobIdForStep(pipelineId, step.id),
+        name: step.name,
+      };
 
-        return result;
-      })
-      .value();
-  }
-}
+      return result;
+    })
+    .value();
 
+HpeApiPipeline.jobIdForStep = (pipelineId, stepId) =>
+  util.format('%s-%s', pipelineId, stepId);
