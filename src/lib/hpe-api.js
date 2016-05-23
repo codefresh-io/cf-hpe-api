@@ -203,18 +203,19 @@ HpeApi.reportBuildPipelineStepStatus =
       });
   };
 
-HpeApi.reportBuildPipelineTestResults = (session, testResult) => {
-  const jobCiId = HpeApiPipeline.jobIdForStep(testResult.pipelineId, testResult.stepId);
+HpeApi.reportBuildPipelineTestResults = (buildSession, stepId, testResult) => {
   const builder = new Xml2js.Builder();
+  const jobCiId = HpeApiPipeline.jobIdForStep(buildSession.pipelineId, stepId);
+
   const data = builder.buildObject({
     test_result: {
       build: {
         $: {
-          server_id: testResult.ciServerId,
+          server_id: buildSession.ciServerId,
           job_id: jobCiId,
           job_name: jobCiId,
-          build_id: testResult.buildId,
-          build_name: testResult.buildId,
+          build_id: buildSession.buildId,
+          build_name: buildSession.buildName,
         },
       },
       test_runs: {
@@ -236,13 +237,13 @@ HpeApi.reportBuildPipelineTestResults = (session, testResult) => {
   const options = {
     uri: util.format(
       '%s/test-results/',
-      HpeApi.getWorkspaceUri(session)),
+      HpeApi.getWorkspaceUri(buildSession.session)),
     'content-type': 'application/xml',
     body: data,
   };
 
   return RequestRx
-    .post(session.request, options)
+    .post(buildSession.session.request, options)
     .map(response => {
       if (response.statusCode !== 202) {
         throw new HpeApiError(

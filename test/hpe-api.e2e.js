@@ -166,106 +166,90 @@ describe('HpeApi', function () {
   it('Should report pipeline step "deploy-script" status as "finished"', function (done) {
     reportPipelineStepStatusHelper(this, 'deploy-script', 'finished', 'success', done);
   });
-//
-//  it('Should publish test success results #1', function (done) {
-//    const testResult = {
-//      stepId: 'unit-test-script',
-//      ciServerId: this.ciServerId,
-//      pipelineId: this.pipelineId,
-//      buildId: this.rootJobBuildId,
-//      testRuns: [
-//        {
-//          testName: 'Should pass unit test #1',
-//          started: Date.now(),
-//          duration: 1000,
-//          status: 'Passed',
-//          package: 'cf-hpe',
-//          module: 'test-1',
-//          class: 'hpe',
-//        },
-//      ],
-//    };
-//
-//    HpeApi
-//      .reportPipelineTestResults(this.session, testResult)
-//      .subscribe(() => done(),
-//        error => done(error));
-//  });
-//
-//  it('Should publish test failed results #2', function (done) {
-//    const testResult = {
-//      stepId: 'unit-test-script',
-//      ciServerId: this.ciServerId,
-//      pipelineId: this.pipelineId,
-//      buildId: this.rootJobBuildId,
-//      testRuns: [
-//        {
-//          testName: 'Should pass unit test #2',
-//          started: Date.now(),
-//          duration: 1000,
-//          status: 'Failed',
-//          package: 'cf-hpe',
-//          module: 'test-1',
-//          class: 'hpe',
-//        },
-//      ],
-//    };
-//
-//    HpeApi
-//      .reportPipelineTestResults(this.session, testResult)
-//      .subscribe(() => done(),
-//        error => done(error));
-//  });
-//
-//  it('Should publish test success results #3', function (done) {
-//    const testResult = {
-//      stepId: 'integration-test-script',
-//      ciServerId: this.ciServerId,
-//      pipelineId: this.pipelineId,
-//      buildId: this.rootJobBuildId,
-//      testRuns: [
-//        {
-//          testName: 'Should pass integration test #1',
-//          started: Date.now(),
-//          duration: 1000,
-//          status: 'Passed',
-//          package: 'cf-hpe',
-//          module: 'test-2',
-//          class: 'hpe',
-//        },
-//      ],
-//    };
-//
-//    HpeApi
-//      .reportPipelineTestResults(this.session, testResult)
-//      .subscribe(() => done(),
-//        error => done(error));
-//  });
-//
-//  it('Should publish test failed results #4', function (done) {
-//    const testResult = {
-//      stepId: 'integration-test-script',
-//      ciServerId: this.ciServerId,
-//      pipelineId: this.pipelineId,
-//      buildId: this.rootJobBuildId,
-//      testRuns: [
-//        {
-//          testName: 'Should pass integration test #2',
-//          started: Date.now(),
-//          duration: 1000,
-//          status: 'Failed',
-//          package: 'cf-hpe',
-//          module: 'test-2',
-//          class: 'hpe',
-//        },
-//      ],
-//    };
-//
-//    HpeApi
-//      .reportPipelineTestResults(this.session, testResult)
-//      .subscribe(() => done(),
-//        error => done(error));
-//  });
+
+  it('Should publish test success results #1', function (done) {
+    const testResult = {
+      testRuns: [
+        {
+          testName: 'Should pass unit test #1',
+          started: Date.now(),
+          duration: 1000,
+          status: 'Passed',
+          package: 'cf-hpe',
+          module: 'test-1',
+          class: 'hpe',
+        },
+      ],
+    };
+
+    HpeApi
+      .reportBuildPipelineTestResults(this.buildSession, 'unit-test-script', testResult)
+      .subscribe(() => done(),
+        error => done(error));
+  });
+
+  it('Should publish test failed results #2', function (done) {
+    const testResult = {
+      testRuns: [
+        {
+          testName: 'Should pass unit test #2',
+          started: Date.now(),
+          duration: 1000,
+          status: 'Failed',
+          package: 'cf-hpe',
+          module: 'test-1',
+          class: 'hpe',
+        },
+      ],
+    };
+
+    HpeApi
+      .reportBuildPipelineTestResults(this.buildSession, 'unit-test-script', testResult)
+      .subscribe(() => done(),
+        error => done(error));
+  });
+
+  it('Should publish test success results #3', function (done) {
+    const testResult = {
+      testRuns: [
+        {
+          testName: 'Should pass integration test #1',
+          started: Date.now(),
+          duration: 1000,
+          status: 'Passed',
+          package: 'cf-hpe',
+          module: 'test-2',
+          class: 'hpe',
+        },
+      ],
+    };
+
+    HpeApi
+      .reportBuildPipelineTestResults(this.buildSession, 'integration-test-script', testResult)
+      .subscribe(() => done(),
+        error => done(error));
+  });
+
+  it('Should publish test failed results #4', function (done) {
+    const testResult = {
+      testRuns: [
+        {
+          testName: 'Should pass integration test #2',
+          started: Date.now(),
+          duration: 1000,
+          status: 'Failed',
+          package: 'cf-hpe',
+          module: 'test-2',
+          class: 'hpe',
+        },
+      ],
+    };
+
+    HpeApi
+      .reportBuildPipelineTestResults(this.buildSession, 'integration-test-script', testResult)
+      .subscribe(() => done(),
+        error => done(error));
+  });
 
   it('Should report pipeline status as "finished"', function (done) {
     HpeApi
