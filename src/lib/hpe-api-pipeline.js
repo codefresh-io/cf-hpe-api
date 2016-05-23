@@ -1,7 +1,8 @@
-import _ from 'lodash';
+/* eslint-disable new-cap */
 import util from 'util';
+import { List } from 'immutable';
 
-const pipelineSteps = [
+const pipelineSteps = List([
   {
     id: 'pipeline',
     name: 'Codefresh Build',
@@ -34,23 +35,24 @@ const pipelineSteps = [
     id: 'deploy-script',
     name: 'Deploy Script',
   },
-];
+]);
 
 export const HpeApiPipeline = {};
 
 HpeApiPipeline.steps = () => pipelineSteps;
 
 HpeApiPipeline.jobs = (pipelineId) =>
-  _(HpeApiPipeline.steps())
-    .map(step => {
-      const result = {
-        jobCiId: HpeApiPipeline.jobIdForStep(pipelineId, step.id),
-        name: step.name,
-      };
-
-      return result;
-    })
-    .value();
+  HpeApiPipeline
+    .steps()
+    .reduce(
+      (result, step) => {
+        result.push({
+          jobCiId: HpeApiPipeline.jobIdForStep(pipelineId, step.id),
+          name: step.name,
+        });
+        return result;
+      },
+      []);
 
 HpeApiPipeline.jobIdForStep = (pipelineId, stepId) =>
   util.format('%s-%s', pipelineId, stepId);
