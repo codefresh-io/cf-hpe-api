@@ -1,6 +1,11 @@
-export class HpeApiError extends Error {
-  constructor(statusCode, message) {
-    super(message);
-    this.statusCode = statusCode;
-  }
-}
+import util from 'util';
+
+export const HpeApiError = {};
+
+HpeApiError.create = (statusCode, message, ...args) => {
+  const error = new Error();
+  error.name = 'HpeApiError';
+  error.statusCode = statusCode;
+  error.message = message ? util.format(message, ...args) : '';
+  return error;
+};

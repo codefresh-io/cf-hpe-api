@@ -29,7 +29,7 @@ HpeApi.createSession = () => {
     .post(signInRequest, options)
     .flatMap(response => {
       if (response.statusCode !== 200) {
-        throw new HpeApiError(
+        throw HpeApiError.create(
           response.statusCode,
           JSON.stringify(response.body, null, 2));
       }
@@ -70,7 +70,7 @@ HpeApi.findCiServer = (session, instanceId) => {
     .get(session.request, options)
     .flatMap(response => {
       if (response.statusCode !== 200) {
-        throw new HpeApiError(
+        throw HpeApiError.create(
           response.statusCode,
           JSON.stringify(response.body, null, 2));
       }
@@ -103,7 +103,7 @@ HpeApi.createCiServer = (session, id, name) => {
     .post(session.request, options)
     .map(response => {
       if (response.statusCode !== 201) {
-        throw new HpeApiError(
+        throw HpeApiError.create(
           response.statusCode,
           JSON.stringify(response.body, null, 2));
       }
@@ -139,7 +139,7 @@ HpeApi.createPipeline = (session, ciServerHpeId, id, name) => {
     .post(session.request, options)
     .map(response => {
       if (response.statusCode !== 201) {
-        throw new HpeApiError(
+        throw HpeApiError.create(
           response.statusCode,
           JSON.stringify(response.body, null, 2));
       }
@@ -191,7 +191,7 @@ HpeApi.reportBuildPipelineStepStatus =
       .put(buildSession.session.request, options)
       .map(response => {
         if (response.statusCode !== 200) {
-          throw new HpeApiError(
+          throw HpeApiError.create(
             response.statusCode,
             JSON.stringify(response.body, null, 2));
         }
@@ -246,7 +246,7 @@ HpeApi.reportBuildPipelineTestResults = (buildSession, stepId, testResult) => {
     .post(buildSession.session.request, options)
     .map(response => {
       if (response.statusCode !== 202) {
-        throw new HpeApiError(
+        throw HpeApiError.create(
           response.statusCode,
           JSON.stringify(response.body, null, 2));
       }

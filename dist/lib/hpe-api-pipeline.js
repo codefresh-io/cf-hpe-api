@@ -5,21 +5,18 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.HpeApiPipeline = undefined;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _lodash = require('lodash');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
 var _util = require('util');
 
 var _util2 = _interopRequireDefault(_util);
 
+var _immutable = require('immutable');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+/* eslint-disable new-cap */
 
-var pipelineSteps = [{
+
+var pipelineSteps = (0, _immutable.List)([{
   id: 'pipeline',
   name: 'Codefresh Build'
 }, {
@@ -43,36 +40,24 @@ var pipelineSteps = [{
 }, {
   id: 'deploy-script',
   name: 'Deploy Script'
-}];
+}]);
 
-var HpeApiPipeline = exports.HpeApiPipeline = function () {
-  function HpeApiPipeline() {
-    _classCallCheck(this, HpeApiPipeline);
-  }
+var HpeApiPipeline = exports.HpeApiPipeline = {};
 
-  _createClass(HpeApiPipeline, null, [{
-    key: 'steps',
-    value: function steps() {
-      return pipelineSteps;
-    }
-  }, {
-    key: 'jobId',
-    value: function jobId(pipelineId, stepId) {
-      return _util2.default.format('%s-%s', pipelineId, stepId);
-    }
-  }, {
-    key: 'jobs',
-    value: function jobs(pipelineId) {
-      return (0, _lodash2.default)(HpeApiPipeline.steps()).map(function (step) {
-        var result = {
-          jobCiId: HpeApiPipeline.jobId(pipelineId, step.id),
-          name: step.name
-        };
+HpeApiPipeline.steps = function () {
+  return pipelineSteps;
+};
 
-        return result;
-      }).value();
-    }
-  }]);
+HpeApiPipeline.jobs = function (pipelineId) {
+  return HpeApiPipeline.steps().reduce(function (result, step) {
+    result.push({
+      jobCiId: HpeApiPipeline.jobIdForStep(pipelineId, step.id),
+      name: step.name
+    });
+    return result;
+  }, []);
+};
 
-  return HpeApiPipeline;
-}();
+HpeApiPipeline.jobIdForStep = function (pipelineId, stepId) {
+  return _util2.default.format('%s-%s', pipelineId, stepId);
+};
