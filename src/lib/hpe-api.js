@@ -151,7 +151,7 @@ HpeApi.createPipeline = (session, ciServerHpeId, id, name) => {
     });
 };
 
-HpeApi.createBuildSession = (session, pipelineId, ciServerId, buildId, buildName) =>
+HpeApi.createBuildSession = (session, ciServerId, pipelineId, buildId, buildName) =>
   HpeApiBuildSession.create(session, ciServerId, pipelineId, buildId, buildName);
 
 HpeApi.reportBuildPipelineStepStatus =

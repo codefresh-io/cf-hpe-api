@@ -18,20 +18,17 @@ describe('HpeApi', function () {
   this.pipelineId = null;
   this.buildStartTime = null;
 
-  function reportPipelineStepStatusHelper(stepId, status, result, done) {
-    const stepStatus = {
-      stepId,
-      ciServerId: this.ciServerId,
-      pipelineId: this.pipelineId,
-      buildId: this.rootJobBuildId,
-      startTime: this.rootJobStartTime,
-      duration: Date.now() - this.rootJobStartTime,
-      status,
-      result,
-    };
+  const makeId = R.compose(R.toLower, (R.replace(' ', '-')));
 
+  function reportPipelineStepStatusHelper(test, stepId, status, result, done) {
     HpeApi
-      .reportPipelineStepStatus(this.session, stepStatus)
+      .reportBuildPipelineStepStatus(
+        test.buildSession,
+        stepId,
+        test.buildStartTime,
+        Date.now() - test.buildStartTime,
+        status,
+        result)
       .subscribe(
         () => done(),
         error => done(error));
@@ -50,7 +47,7 @@ describe('HpeApi', function () {
 
   it('Should create a CI server', function (done) {
     const ciServerName = util.format('Codefresh %d', Date.now());
-    const ciServerId = R.toLower(ciServerName);
+    const ciServerId = makeId(ciServerName);
 
     HpeApi
       .createCiServer(this.session, ciServerId, ciServerName)
@@ -82,7 +79,7 @@ describe('HpeApi', function () {
 
   it('Should create a CI server pipeline ', function (done) {
     const pipelineName = util.format('Pipeline %d', Date.now());
-    const pipelineId = R.toLower(pipelineName);
+    const pipelineId = makeId(pipelineName);
 
     HpeApi
       .createPipeline(this.session, this.ciServerHpeId, pipelineId, pipelineName)
@@ -112,7 +109,7 @@ describe('HpeApi', function () {
 
   it('Should create build session', function () {
     const buildName = util.format('Build %d', Date.now());
-    const buildId = R.toLower(buildName);
+    const buildId = makeId(buildName);
 
     this.buildSession = HpeApi.createBuildSession(
       this.session,
@@ -142,33 +139,33 @@ describe('HpeApi', function () {
         error => done(error));
   });
 
-//  it('Should report pipeline step "clone-repository" status as "finished"', function (done) {
-//    reportPipelineStepStatusHelper('clone-repository', 'finished', 'success', done);
-//  });
-//
-//  it('Should report pipeline step "build-dockerfile" status as "finished"', function (done) {
-//    reportPipelineStepStatusHelper('build-dockerfile', 'finished', 'success', done);
-//  });
-//
-//  it('Should report pipeline step "unit-test-script" status as "finished"', function (done) {
-//    reportPipelineStepStatusHelper('unit-test-script', 'finished', 'success', done);
-//  });
-//
-//  it('Should report pipeline step "push-docker-registry" status as "finished"', function (done) {
-//    reportPipelineStepStatusHelper('push-docker-registry', 'finished', 'success', done);
-//  });
-//
-//  it('Should report pipeline step "integration-test-script" status as "finished"', function (done) {
-//    reportPipelineStepStatusHelper('integration-test-script', 'finished', 'success', done);
-//  });
-//
-//  it('Should report pipeline step "security-validation" status as "finished"', function (done) {
-//    reportPipelineStepStatusHelper('security-validation', 'finished', 'success', done);
-//  });
-//
-//  it('Should report pipeline step "deploy-script" status as "finished"', function (done) {
-//    reportPipelineStepStatusHelper('deploy-script', 'finished', 'success', done);
-//  });
+  it('Should report pipeline step "clone-repository" status as "finished"', function (done) {
+    reportPipelineStepStatusHelper(this, 'clone-repository', 'finished', 'success', done);
+  });
+
+  it('Should report pipeline step "build-dockerfile" status as "finished"', function (done) {
+    reportPipelineStepStatusHelper(this, 'build-dockerfile', 'finished', 'success', done);
+  });
+
+  it('Should report pipeline step "unit-test-script" status as "finished"', function (done) {
+    reportPipelineStepStatusHelper(this, 'unit-test-script', 'finished', 'success', done);
+  });
+
+  it('Should report pipeline step "push-docker-registry" status as "finished"', function (done) {
+    reportPipelineStepStatusHelper(this, 'push-docker-registry', 'finished', 'success', done);
+  });
+
+  it('Should report pipeline step "integration-test-script" status as "finished"', function (done) {
+    reportPipelineStepStatusHelper(this, 'integration-test-script', 'finished', 'success', done);
+  });
+
+  it('Should report pipeline step "security-validation" status as "finished"', function (done) {
+    reportPipelineStepStatusHelper(this, 'security-validation', 'finished', 'success', done);
+  });
+
+  it('Should report pipeline step "deploy-script" status as "finished"', function (done) {
+    reportPipelineStepStatusHelper(this, 'deploy-script', 'finished', 'success', done);
+  });
 //
 //  it('Should publish test success results #1', function (done) {
 //    const testResult = {
