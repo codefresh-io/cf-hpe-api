@@ -103,13 +103,13 @@ HpeApiBuildSession.reportBuildPipelineTestResults = function (buildSession, step
       test_runs: {
         test_run: {
           $: {
-            name: testResult.testRuns[0].testName,
-            started: testResult.testRuns[0].started,
-            duration: testResult.testRuns[0].duration,
-            status: testResult.testRuns[0].status,
-            module: testResult.testRuns[0].module,
-            package: testResult.testRuns[0].package,
-            class: testResult.testRuns[0].class
+            name: testResult[0].name,
+            started: testResult[0].started,
+            duration: testResult[0].duration,
+            status: testResult[0].status,
+            module: testResult[0].module,
+            package: testResult[0].package,
+            class: testResult[0].class
           }
         }
       }
