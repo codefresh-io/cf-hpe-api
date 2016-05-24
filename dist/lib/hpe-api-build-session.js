@@ -26,6 +26,8 @@ var _hpeApiPipeline = require('./hpe-api-pipeline');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var HpeApiBuildSession = exports.HpeApiBuildSession = (0, _immutable.Record)({
   session: null,
   ciServerId: null,
@@ -86,10 +88,10 @@ HpeApiBuildSession.reportBuildPipelineStepStatus = function (buildSession, stepI
 };
 
 HpeApiBuildSession.reportBuildPipelineTestResults = function (buildSession, stepId, testResult) {
-  var builder = new _xml2js2.default.Builder();
+  var xmlBuilder = new _xml2js2.default.Builder();
   var jobCiId = _hpeApiPipeline.HpeApiPipeline.jobIdForStep(buildSession.pipelineId, stepId);
 
-  var data = builder.buildObject({
+  var data = xmlBuilder.buildObject({
     test_result: {
       build: {
         $: {
@@ -100,7 +102,7 @@ HpeApiBuildSession.reportBuildPipelineTestResults = function (buildSession, step
           build_name: buildSession.buildName
         }
       },
-      test_runs: {
+      test_runs: _defineProperty({
         test_run: {
           $: {
             name: testResult[0].name,
@@ -112,7 +114,17 @@ HpeApiBuildSession.reportBuildPipelineTestResults = function (buildSession, step
             class: testResult[0].class
           }
         }
-      }
+      }, 'test_run', {
+        $: {
+          name: testResult[0].name,
+          started: testResult[0].started,
+          duration: testResult[0].duration,
+          status: testResult[0].status,
+          module: testResult[0].module,
+          package: testResult[0].package,
+          class: testResult[0].class
+        }
+      })
     }
   });
 
