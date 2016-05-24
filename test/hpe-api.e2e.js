@@ -5,7 +5,7 @@ import './config.env';
 import R from 'ramda';
 import util from 'util';
 import { expect } from 'chai';
-import { HpeApiSession, HpeApiBuildSession, HpeApiPipeline } from 'cf-hpe-api';
+import { HpeApiSession, HpeApiBuildSession, HpeApiPipeline, HpeApiTestResult } from 'cf-hpe-api';
 
 describe('HpeApi', function () {
   this.slow(5000);
@@ -168,77 +168,65 @@ describe('HpeApi', function () {
   });
 
   it('Should publish test success results #1', function (done) {
-    const testResult = [
-      {
-        testName: 'Should pass unit test #1',
-        started: Date.now(),
-        duration: 1000,
-        status: 'Passed',
-        package: 'cf-hpe',
-        module: 'test-1',
-        class: 'hpe',
-      },
-    ];
+    const testResult = HpeApiTestResult.create(
+      'Should pass unit test #1',
+      Date.now(),
+      1000,
+      'Passed',
+      'cf-hpe',
+      'test-1',
+      'hpe');
 
     HpeApiBuildSession
-      .reportBuildPipelineTestResults(this.buildSession, 'unit-test-script', testResult)
+      .reportBuildPipelineTestResults(this.buildSession, 'unit-test-script', [testResult])
       .subscribe(() => done(),
         error => done(error));
   });
 
   it('Should publish test failed results #2', function (done) {
-    const testResult = [
-      {
-        testName: 'Should pass unit test #2',
-        started: Date.now(),
-        duration: 1000,
-        status: 'Failed',
-        package: 'cf-hpe',
-        module: 'test-1',
-        class: 'hpe',
-      },
-    ];
+    const testResult = HpeApiTestResult.create(
+      'Should pass unit test #2',
+      Date.now(),
+      1000,
+      'Failed',
+      'cf-hpe',
+      'test-1',
+      'hpe');
 
     HpeApiBuildSession
-      .reportBuildPipelineTestResults(this.buildSession, 'unit-test-script', testResult)
+      .reportBuildPipelineTestResults(this.buildSession, 'unit-test-script', [testResult])
       .subscribe(() => done(),
         error => done(error));
   });
 
   it('Should publish test success results #3', function (done) {
-    const testResult = [
-      {
-        testName: 'Should pass integration test #1',
-        started: Date.now(),
-        duration: 1000,
-        status: 'Passed',
-        package: 'cf-hpe',
-        module: 'test-2',
-        class: 'hpe',
-      },
-    ];
+    const testResult = HpeApiTestResult.create(
+      'Should pass integration test #1',
+      Date.now(),
+      1000,
+      'Passed',
+      'cf-hpe',
+      'test-2',
+      'hpe');
 
     HpeApiBuildSession
-      .reportBuildPipelineTestResults(this.buildSession, 'integration-test-script', testResult)
+      .reportBuildPipelineTestResults(this.buildSession, 'integration-test-script', [testResult])
       .subscribe(() => done(),
         error => done(error));
   });
 
   it('Should publish test failed results #4', function (done) {
-    const testResult = [
-      {
-        testName: 'Should pass integration test #2',
-        started: Date.now(),
-        duration: 1000,
-        status: 'Failed',
-        package: 'cf-hpe',
-        module: 'test-2',
-        class: 'hpe',
-      },
-    ];
+    const testResult = HpeApiTestResult.create(
+      'Should pass integration test #2',
+      Date.now(),
+      1000,
+      'Failed',
+      'cf-hpe',
+      'test-2',
+      'hpe');
 
     HpeApiBuildSession
-      .reportBuildPipelineTestResults(this.buildSession, 'integration-test-script', testResult)
+      .reportBuildPipelineTestResults(this.buildSession, 'integration-test-script', [testResult])
       .subscribe(() => done(),
         error => done(error));
   });

@@ -98,7 +98,7 @@ HpeApiBuildSession.reportBuildPipelineTestResults = (buildSession, stepId, testR
       test_runs: {
         test_run: {
           $: {
-            name: testResult[0].testName,
+            name: testResult[0].name,
             started: testResult[0].started,
             duration: testResult[0].duration,
             status: testResult[0].status,
