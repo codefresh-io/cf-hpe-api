@@ -107,17 +107,6 @@ HpeApiBuildSession.reportBuildPipelineTestResults = (buildSession, stepId, testR
             class: testResult[0].class,
           },
         },
-        test_run: {
-          $: {
-            name: testResult[0].name,
-            started: testResult[0].started,
-            duration: testResult[0].duration,
-            status: testResult[0].status,
-            module: testResult[0].module,
-            package: testResult[0].package,
-            class: testResult[0].class,
-          },
-        },
       },
     },
   });
