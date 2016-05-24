@@ -168,19 +168,17 @@ describe('HpeApi', function () {
   });
 
   it('Should publish test success results #1', function (done) {
-    const testResult = {
-      testRuns: [
-        {
-          testName: 'Should pass unit test #1',
-          started: Date.now(),
-          duration: 1000,
-          status: 'Passed',
-          package: 'cf-hpe',
-          module: 'test-1',
-          class: 'hpe',
-        },
-      ],
-    };
+    const testResult = [
+      {
+        testName: 'Should pass unit test #1',
+        started: Date.now(),
+        duration: 1000,
+        status: 'Passed',
+        package: 'cf-hpe',
+        module: 'test-1',
+        class: 'hpe',
+      },
+    ];
 
     HpeApiBuildSession
       .reportBuildPipelineTestResults(this.buildSession, 'unit-test-script', testResult)
@@ -189,19 +187,17 @@ describe('HpeApi', function () {
   });
 
   it('Should publish test failed results #2', function (done) {
-    const testResult = {
-      testRuns: [
-        {
-          testName: 'Should pass unit test #2',
-          started: Date.now(),
-          duration: 1000,
-          status: 'Failed',
-          package: 'cf-hpe',
-          module: 'test-1',
-          class: 'hpe',
-        },
-      ],
-    };
+    const testResult = [
+      {
+        testName: 'Should pass unit test #2',
+        started: Date.now(),
+        duration: 1000,
+        status: 'Failed',
+        package: 'cf-hpe',
+        module: 'test-1',
+        class: 'hpe',
+      },
+    ];
 
     HpeApiBuildSession
       .reportBuildPipelineTestResults(this.buildSession, 'unit-test-script', testResult)
@@ -210,19 +206,17 @@ describe('HpeApi', function () {
   });
 
   it('Should publish test success results #3', function (done) {
-    const testResult = {
-      testRuns: [
-        {
-          testName: 'Should pass integration test #1',
-          started: Date.now(),
-          duration: 1000,
-          status: 'Passed',
-          package: 'cf-hpe',
-          module: 'test-2',
-          class: 'hpe',
-        },
-      ],
-    };
+    const testResult = [
+      {
+        testName: 'Should pass integration test #1',
+        started: Date.now(),
+        duration: 1000,
+        status: 'Passed',
+        package: 'cf-hpe',
+        module: 'test-2',
+        class: 'hpe',
+      },
+    ];
 
     HpeApiBuildSession
       .reportBuildPipelineTestResults(this.buildSession, 'integration-test-script', testResult)
@@ -231,19 +225,17 @@ describe('HpeApi', function () {
   });
 
   it('Should publish test failed results #4', function (done) {
-    const testResult = {
-      testRuns: [
-        {
-          testName: 'Should pass integration test #2',
-          started: Date.now(),
-          duration: 1000,
-          status: 'Failed',
-          package: 'cf-hpe',
-          module: 'test-2',
-          class: 'hpe',
-        },
-      ],
-    };
+    const testResult = [
+      {
+        testName: 'Should pass integration test #2',
+        started: Date.now(),
+        duration: 1000,
+        status: 'Failed',
+        package: 'cf-hpe',
+        module: 'test-2',
+        class: 'hpe',
+      },
+    ];
 
     HpeApiBuildSession
       .reportBuildPipelineTestResults(this.buildSession, 'integration-test-script', testResult)
