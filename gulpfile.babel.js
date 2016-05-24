@@ -34,7 +34,7 @@ gulp.task('build', ['clean'], () =>
 gulp.task('git-commit-build', () =>
   gulp.src('.')
     .pipe(git.add())
-    .pipe(git.commit('Build')));
+    .pipe(git.commit('gulp-git-commit-build')));
 
 gulp.task('git-push-develop', (callback) =>
   git.push('origin', 'develop', callback));
