@@ -7,14 +7,13 @@ import { Record } from 'immutable';
 import { RequestRx } from 'lib/request-rx';
 import { HpeApiError } from 'lib/hpe-api-error';
 import { HpeApiPipeline } from 'lib/hpe-api-pipeline';
-import { hpeApiConfig } from './hpe-api-config';
 
 export const HpeApiSession = Record({
   request: null,
   config: null,
 });
 
-HpeApiSession.create = () => {
+HpeApiSession.create = (hpeApiConfig) => {
   const jar = request.jar();
   const signInRequest = request.defaults({ jar });
   const options = {

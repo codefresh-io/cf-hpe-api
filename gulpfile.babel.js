@@ -48,7 +48,7 @@ gulp.task('git-push', (callback) =>
 gulp.task('release', callback => {
   runSequence(
     'build',
-    'git-commit',
+    'git-commit-release',
     'git-push',
     callback);
 });

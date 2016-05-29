@@ -5,7 +5,20 @@ import './config.env';
 import R from 'ramda';
 import util from 'util';
 import { expect } from 'chai';
-import { HpeApiSession, HpeApiBuildSession, HpeApiPipeline, HpeApiTestResult } from 'cf-hpe-api';
+import {
+  HpeApiConfig,
+  HpeApiSession,
+  HpeApiBuildSession,
+  HpeApiPipeline,
+  HpeApiTestResult,
+} from 'cf-hpe-api';
+
+const hpeApiConfig = HpeApiConfig.create(
+  process.env.CF_HPE_SERVER_URL,
+  process.env.CF_HPE_USER,
+  process.env.CF_HPE_PASSWORD,
+  process.env.CF_HPE_SHARED_SPACE,
+  process.env.CF_HPE_WORKSPACE);
 
 describe('HpeApi', function () {
   this.slow(5000);
@@ -36,7 +49,7 @@ describe('HpeApi', function () {
 
   it('Should create a session', function (done) {
     HpeApiSession
-      .create()
+      .create(hpeApiConfig)
       .subscribe(
         session => {
           this.session = session;

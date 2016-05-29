@@ -29,8 +29,6 @@ var _hpeApiError = require('./hpe-api-error');
 
 var _hpeApiPipeline = require('./hpe-api-pipeline');
 
-var _hpeApiConfig = require('./hpe-api-config');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var HpeApiSession = exports.HpeApiSession = (0, _immutable.Record)({
@@ -38,15 +36,15 @@ var HpeApiSession = exports.HpeApiSession = (0, _immutable.Record)({
   config: null
 });
 
-HpeApiSession.create = function () {
+HpeApiSession.create = function (hpeApiConfig) {
   var jar = _request2.default.jar();
   var signInRequest = _request2.default.defaults({ jar: jar });
   var options = {
-    uri: _util2.default.format('%s/authentication/sign_in/', _hpeApiConfig.hpeApiConfig.hpeServerUrl),
+    uri: _util2.default.format('%s/authentication/sign_in/', hpeApiConfig.hpeServerUrl),
     json: true,
     body: {
-      user: _hpeApiConfig.hpeApiConfig.hpeUser,
-      password: _hpeApiConfig.hpeApiConfig.hpePassword
+      user: hpeApiConfig.hpeUser,
+      password: hpeApiConfig.hpePassword
     }
   };
 
@@ -55,7 +53,7 @@ HpeApiSession.create = function () {
       throw _hpeApiError.HpeApiError.create(response.statusCode, JSON.stringify(response.body, null, 2));
     }
 
-    return _rx2.default.Observable.from(jar.getCookies(_hpeApiConfig.hpeApiConfig.hpeServerUrl)).first(function (cookie) {
+    return _rx2.default.Observable.from(jar.getCookies(hpeApiConfig.hpeServerUrl)).first(function (cookie) {
       return cookie.key === 'HPSSO_COOKIE_CSRF';
     }).map(function (cookie) {
       return cookie.value;
@@ -69,7 +67,7 @@ HpeApiSession.create = function () {
     }).map(function (sessionRequest) {
       return new HpeApiSession({
         request: sessionRequest,
-        config: _hpeApiConfig.hpeApiConfig
+        config: hpeApiConfig
       });
     });
   });
