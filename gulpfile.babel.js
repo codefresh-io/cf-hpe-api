@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import gulp from 'gulp';
 import eslint from 'gulp-eslint';
 import babel from 'gulp-babel';
@@ -14,7 +15,7 @@ gulp.task('lint', () =>
     .pipe(eslint.failAfterError()));
 
 gulp.task('test', () =>
-  gulp.src(['test/**/*.unit.js'], { read: false })
+  gulp.src(['test/**/*.spec.js'], { read: false })
     .pipe(mocha()));
 
 gulp.task('bump-version', () => {
@@ -31,18 +32,23 @@ gulp.task('build', ['clean'], () =>
     .pipe(babel())
     .pipe(gulp.dest('dist')));
 
-gulp.task('git-commit-build', () =>
+gulp.task('git-commit-updates', () =>
   gulp.src('.')
     .pipe(git.add())
-    .pipe(git.commit('Release build')));
+    .pipe(git.commit('updates')));
 
-gulp.task('git-push-develop', (callback) =>
+gulp.task('git-commit-release', () =>
+  gulp.src('.')
+    .pipe(git.add())
+    .pipe(git.commit('release')));
+
+gulp.task('git-push', (callback) =>
   git.push(null, null, callback));
 
 gulp.task('release', callback => {
   runSequence(
     'build',
-    'git-commit-build',
-    'git-push-develop',
+    'git-commit',
+    'git-push',
     callback);
 });
