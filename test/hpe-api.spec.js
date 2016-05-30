@@ -1,7 +1,6 @@
 /* eslint-env mocha */
 /* eslint-disable func-names */
 /* eslint-disable prefer-arrow-callback */
-import './config.env';
 import R from 'ramda';
 import util from 'util';
 import { expect } from 'chai';
