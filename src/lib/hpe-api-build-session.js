@@ -80,30 +80,34 @@ HpeApiBuildSession.reportBuildPipelineStepStatus =
       });
   };
 
-HpeApiBuildSession.reportBuildPipelineTestResults = (buildSession, stepId, testResult) => {
+HpeApiBuildSession.reportBuildPipelineTestResults = (buildSession, stepId, testResults) => {
   const xmlBuilder = new Xml2js.Builder();
   const jobCiId = HpeApiPipeline.jobIdForStep(buildSession.pipelineId, stepId);
+  const testResult = testResults[0];
 
   const testRun = {
     $: {
-      name: testResult[0].name,
-      started: testResult[0].started,
-      duration: testResult[0].duration,
-      status: testResult[0].status,
-      module: testResult[0].module,
-      package: testResult[0].package,
-      class: testResult[0].class,
+      name: testResult.name,
+      started: testResult.started,
+      duration: testResult.duration,
+      status: testResult.status,
+      module: testResult.module,
+      package: testResult.package,
+      class: testResult.class,
     },
   };
 
-  if (testResult[0].errorType) {
+  if (testResult.errorType) {
     testRun.error = {
       $: {
-        type: testResult[0].errorType,
-        message: testResult[0].errorMessage,
+        type: testResult.errorType,
+        message: testResult.errorMessage,
       },
-      _: testResult[0].errorStackTrace,
     };
+  }
+
+  if (testResult.errorStackTrace) {
+    testRun.error._ = testResult.errorStackTrace;
   }
 
   const data = xmlBuilder.buildObject({
