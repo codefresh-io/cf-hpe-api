@@ -8,20 +8,12 @@ const pipelineSteps = List([
     name: 'Codefresh Build',
   },
   {
-    id: 'clone-repository',
-    name: 'Clone Repository',
-  },
-  {
     id: 'build-dockerfile',
     name: 'Build Dockerfile',
   },
   {
     id: 'unit-test-script',
     name: 'Unit Test Script',
-  },
-  {
-    id: 'push-docker-registry',
-    name: 'Push to Docker Registry',
   },
   {
     id: 'integration-test-script',

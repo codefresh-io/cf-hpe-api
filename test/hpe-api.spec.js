@@ -110,8 +110,6 @@ describe('HpeApi', function () {
           expect(response.jobs[3].jobCiId).to.equal(pipelineJobs[3].jobCiId);
           expect(response.jobs[4].jobCiId).to.equal(pipelineJobs[4].jobCiId);
           expect(response.jobs[5].jobCiId).to.equal(pipelineJobs[5].jobCiId);
-          expect(response.jobs[6].jobCiId).to.equal(pipelineJobs[6].jobCiId);
-          expect(response.jobs[7].jobCiId).to.equal(pipelineJobs[7].jobCiId);
 
           this.pipelineId = pipelineId;
           done();
@@ -151,20 +149,12 @@ describe('HpeApi', function () {
         error => done(error));
   });
 
-  it('Should report pipeline step "clone-repository" status as "finished"', function (done) {
-    reportPipelineStepStatusHelper(this, 'clone-repository', 'finished', 'success', done);
-  });
-
   it('Should report pipeline step "build-dockerfile" status as "finished"', function (done) {
     reportPipelineStepStatusHelper(this, 'build-dockerfile', 'finished', 'success', done);
   });
 
   it('Should report pipeline step "unit-test-script" status as "finished"', function (done) {
     reportPipelineStepStatusHelper(this, 'unit-test-script', 'finished', 'success', done);
-  });
-
-  it('Should report pipeline step "push-docker-registry" status as "finished"', function (done) {
-    reportPipelineStepStatusHelper(this, 'push-docker-registry', 'finished', 'success', done);
   });
 
   it('Should report pipeline step "integration-test-script" status as "finished"', function (done) {
