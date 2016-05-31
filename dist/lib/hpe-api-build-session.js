@@ -85,9 +85,35 @@ HpeApiBuildSession.reportBuildPipelineStepStatus = function (buildSession, stepI
   });
 };
 
-HpeApiBuildSession.reportBuildPipelineTestResults = function (buildSession, stepId, testResult) {
+HpeApiBuildSession.reportBuildPipelineTestResults = function (buildSession, stepId, testResults) {
   var xmlBuilder = new _xml2js2.default.Builder();
   var jobCiId = _hpeApiPipeline.HpeApiPipeline.jobIdForStep(buildSession.pipelineId, stepId);
+  var testResult = testResults[0];
+
+  var testRun = {
+    $: {
+      name: testResult.name,
+      started: testResult.started,
+      duration: testResult.duration,
+      status: testResult.status,
+      module: testResult.module,
+      package: testResult.package,
+      class: testResult.class
+    }
+  };
+
+  if (testResult.errorType) {
+    testRun.error = {
+      $: {
+        type: testResult.errorType,
+        message: testResult.errorMessage
+      }
+    };
+  }
+
+  if (testResult.errorStackTrace) {
+    testRun.error._ = testResult.errorStackTrace;
+  }
 
   var data = xmlBuilder.buildObject({
     test_result: {
@@ -101,17 +127,7 @@ HpeApiBuildSession.reportBuildPipelineTestResults = function (buildSession, step
         }
       },
       test_runs: {
-        test_run: {
-          $: {
-            name: testResult[0].name,
-            started: testResult[0].started,
-            duration: testResult[0].duration,
-            status: testResult[0].status,
-            module: testResult[0].module,
-            package: testResult[0].package,
-            class: testResult[0].class
-          }
-        }
+        test_run: testRun
       }
     }
   });

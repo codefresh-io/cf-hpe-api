@@ -14,11 +14,14 @@ var HpeApiTestResult = exports.HpeApiTestResult = (0, _immutable.Record)({
   status: null,
   package: null,
   module: null,
-  class: null
+  class: null,
+  errorType: null,
+  errorMessage: null,
+  errorStackTrace: null
 }); /* eslint-disable new-cap */
 
 
-HpeApiTestResult.create = function (name, started, duration, status, package_, module, class_) {
+HpeApiTestResult.create = function (name, started, duration, status, package_, module, class_, errorType, errorMessage, errorStackTrace) {
   return new HpeApiTestResult({
     name: name,
     started: started,
@@ -26,6 +29,9 @@ HpeApiTestResult.create = function (name, started, duration, status, package_, m
     status: status,
     package: package_,
     module: module,
-    class: class_
+    class: class_,
+    errorType: errorType,
+    errorMessage: errorMessage,
+    errorStackTrace: errorStackTrace
   });
 };
