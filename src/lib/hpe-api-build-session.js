@@ -84,6 +84,28 @@ HpeApiBuildSession.reportBuildPipelineTestResults = (buildSession, stepId, testR
   const xmlBuilder = new Xml2js.Builder();
   const jobCiId = HpeApiPipeline.jobIdForStep(buildSession.pipelineId, stepId);
 
+  const testRun = {
+    $: {
+      name: testResult[0].name,
+      started: testResult[0].started,
+      duration: testResult[0].duration,
+      status: testResult[0].status,
+      module: testResult[0].module,
+      package: testResult[0].package,
+      class: testResult[0].class,
+    },
+  };
+
+  if (testResult[0].errorType) {
+    testRun.error = {
+      $: {
+        type: testResult[0].errorType,
+        message: testResult[0].errorMessage,
+      },
+      _: testResult[0].errorStackTrace,
+    };
+  }
+
   const data = xmlBuilder.buildObject({
     test_result: {
       build: {
@@ -96,17 +118,7 @@ HpeApiBuildSession.reportBuildPipelineTestResults = (buildSession, stepId, testR
         },
       },
       test_runs: {
-        test_run: {
-          $: {
-            name: testResult[0].name,
-            started: testResult[0].started,
-            duration: testResult[0].duration,
-            status: testResult[0].status,
-            module: testResult[0].module,
-            package: testResult[0].package,
-            class: testResult[0].class,
-          },
-        },
+        test_run: testRun,
       },
     },
   });

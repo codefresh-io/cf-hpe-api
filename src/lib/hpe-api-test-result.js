@@ -9,9 +9,22 @@ export const HpeApiTestResult = Record({
   package: null,
   module: null,
   class: null,
+  errorType: null,
+  errorMessage: null,
+  errorStackTrace: null,
 });
 
-HpeApiTestResult.create = (name, started, duration, status, package_, module, class_) => {
+HpeApiTestResult.create = (
+  name,
+  started,
+  duration,
+  status,
+  package_,
+  module,
+  class_,
+  errorType,
+  errorMessage,
+  errorStackTrace) => {
   return new HpeApiTestResult({
     name,
     started,
@@ -20,5 +33,8 @@ HpeApiTestResult.create = (name, started, duration, status, package_, module, cl
     package: package_,
     module,
     class: class_,
+    errorType,
+    errorMessage,
+    errorStackTrace,
   });
 };
