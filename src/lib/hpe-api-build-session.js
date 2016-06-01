@@ -94,6 +94,7 @@ HpeApiBuildSession.reportBuildPipelineTestResults = (buildSession, stepId, testR
       module: testResult.module,
       package: testResult.package,
       class: testResult.class,
+      external_report_url: 'https://....',
     },
   };
 
