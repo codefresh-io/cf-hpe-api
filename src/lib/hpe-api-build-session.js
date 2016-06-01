@@ -91,10 +91,7 @@ HpeApiBuildSession.reportBuildPipelineTestResults = (buildSession, stepId, testR
       started: testResult.started,
       duration: testResult.duration,
       status: testResult.status,
-      module: testResult.module,
-      package: testResult.package,
-      class: testResult.class,
-      external_report_url: 'https://....',
+      // external_report_url: 'https://codefresh.io',
     },
   };
 

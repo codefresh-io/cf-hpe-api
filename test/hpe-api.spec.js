@@ -174,10 +174,7 @@ describe('HpeApi', function () {
       'Should pass unit test #1',
       Date.now(),
       1000,
-      'Passed',
-      'cf-hpe',
-      'test-1',
-      'hpe');
+      'Passed');
 
     HpeApiBuildSession
       .reportBuildPipelineTestResults(this.buildSession, 'unit-test-script', [testResult])
@@ -191,9 +188,6 @@ describe('HpeApi', function () {
       Date.now(),
       1000,
       'Failed',
-      'cf-hpe',
-      'test-1',
-      'hpe',
       'exception',
       'Should pass unit test #2',
       'at org.junit.Assert.fail(Assert.java:88)\n' +
@@ -210,10 +204,7 @@ describe('HpeApi', function () {
       'Should pass integration test #1',
       Date.now(),
       1000,
-      'Passed',
-      'cf-hpe',
-      'test-2',
-      'hpe');
+      'Passed');
 
     HpeApiBuildSession
       .reportBuildPipelineTestResults(this.buildSession, 'integration-test-script', [testResult])
@@ -227,9 +218,6 @@ describe('HpeApi', function () {
       Date.now(),
       1000,
       'Failed',
-      'cf-hpe',
-      'test-2',
-      'hpe',
       'exception',
       'Should pass integration test #2',
       'at org.junit.Assert.fail(Assert.java:88)\n' +
