@@ -1,4 +1,5 @@
 .idea
 *.log
+*.env
 logs
 node_modules
