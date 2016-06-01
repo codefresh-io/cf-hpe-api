@@ -95,10 +95,7 @@ HpeApiBuildSession.reportBuildPipelineTestResults = function (buildSession, step
       name: testResult.name,
       started: testResult.started,
       duration: testResult.duration,
-      status: testResult.status,
-      module: testResult.module,
-      package: testResult.package,
-      class: testResult.class
+      status: testResult.status
     }
   };
 
