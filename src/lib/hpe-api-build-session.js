@@ -1,4 +1,5 @@
 /* eslint-disable new-cap */
+import url from 'url';
 import util from 'util';
 import Xml2js from 'xml2js';
 import { Record } from 'immutable';
@@ -23,13 +24,11 @@ HpeApiBuildSession.create = (session, ciServerId, pipelineId, buildId, buildName
     buildName,
   });
 
-HpeApiBuildSession.getWorkspaceUri = (session) => {
-  return util.format(
-    '%s/api/shared_spaces/%s/workspaces/%s',
-    session.config.hpeServerUrl,
+HpeApiBuildSession.getWorkspaceUri = (session) =>
+  url.resolve(session.config.hpeServerUrl, util.format(
+    '/api/shared_spaces/%s/workspaces/%s',
     session.config.hpeSharedSpace,
-    session.config.hpeWorkspace);
-};
+    session.config.hpeWorkspace));
 
 HpeApiBuildSession.reportBuildPipelineStepStatus =
   (buildSession, stepId, startTime, duration, status, result) => {

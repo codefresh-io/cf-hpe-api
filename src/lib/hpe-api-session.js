@@ -1,6 +1,7 @@
 /* eslint-disable new-cap */
 /* eslint-disable quote-props */
 import Rx from 'rx';
+import url from 'url';
 import util from 'util';
 import request from 'request';
 import { Record } from 'immutable';
@@ -53,13 +54,11 @@ HpeApiSession.create = (hpeApiConfig) => {
     });
 };
 
-HpeApiSession.getWorkspaceUri = (session) => {
-  return util.format(
-    '%s/api/shared_spaces/%s/workspaces/%s',
-    session.config.hpeServerUrl,
+HpeApiSession.getWorkspaceUri = (session) =>
+  url.resolve(session.config.hpeServerUrl, util.format(
+    '/api/shared_spaces/%s/workspaces/%s',
     session.config.hpeSharedSpace,
-    session.config.hpeWorkspace);
-};
+    session.config.hpeWorkspace));
 
 HpeApiSession.findCiServer = (session, instanceId) => {
   const options = {
