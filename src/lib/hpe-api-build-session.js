@@ -124,9 +124,7 @@ HpeApiBuildSession.reportBuildPipelineTestResults = (buildSession, stepId, testR
   });
 
   const options = {
-    uri: util.format(
-      '%s/test-results/',
-      HpeApiBuildSession.getWorkspaceUri(buildSession.session)),
+    uri: util.format('%s/test-results/', HpeApiBuildSession.getWorkspaceUri(buildSession.session)),
     'content-type': 'application/xml',
     body: data,
   };

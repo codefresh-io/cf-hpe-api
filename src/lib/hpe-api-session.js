@@ -18,9 +18,7 @@ HpeApiSession.create = (hpeApiConfig) => {
   const jar = request.jar();
   const signInRequest = request.defaults({ jar });
   const options = {
-    uri: util.format(
-      '%s/authentication/sign_in/',
-      hpeApiConfig.hpeServerUrl),
+    uri: url.resolve(hpeApiConfig.hpeServerUrl, '/authentication/sign_in/'),
     json: true,
     body: {
       user: hpeApiConfig.hpeUser,
@@ -62,9 +60,7 @@ HpeApiSession.getWorkspaceUri = (session) =>
 
 HpeApiSession.findCiServer = (session, instanceId) => {
   const options = {
-    uri: util.format(
-      '%s/ci_servers/',
-      HpeApiSession.getWorkspaceUri(session)),
+    uri: util.format('%s/ci_servers/', HpeApiSession.getWorkspaceUri(session)),
     json: true,
   };
 
@@ -92,9 +88,7 @@ HpeApiSession.createCiServer = (session, id, name) => {
   };
 
   const options = {
-    uri: util.format(
-      '%s/ci_servers/',
-      HpeApiSession.getWorkspaceUri(session)),
+    uri: util.format('%s/ci_servers/', HpeApiSession.getWorkspaceUri(session)),
     json: true,
     body: {
       data: [data],
