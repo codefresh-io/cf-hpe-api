@@ -13,6 +13,10 @@ var _rx = require('rx');
 
 var _rx2 = _interopRequireDefault(_rx);
 
+var _url = require('url');
+
+var _url2 = _interopRequireDefault(_url);
+
 var _util = require('util');
 
 var _util2 = _interopRequireDefault(_util);
@@ -74,7 +78,7 @@ HpeApiSession.create = function (hpeApiConfig) {
 };
 
 HpeApiSession.getWorkspaceUri = function (session) {
-  return _util2.default.format('%s/api/shared_spaces/%s/workspaces/%s', session.config.hpeServerUrl, session.config.hpeSharedSpace, session.config.hpeWorkspace);
+  return _url2.default.resolve(session.config.hpeServerUrl, _util2.default.format('/api/shared_spaces/%s/workspaces/%s', session.config.hpeSharedSpace, session.config.hpeWorkspace));
 };
 
 HpeApiSession.findCiServer = function (session, instanceId) {

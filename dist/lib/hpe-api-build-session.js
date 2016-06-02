@@ -8,6 +8,10 @@ exports.HpeApiBuildSession = undefined;
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /* eslint-disable new-cap */
 
 
+var _url = require('url');
+
+var _url2 = _interopRequireDefault(_url);
+
 var _util = require('util');
 
 var _util2 = _interopRequireDefault(_util);
@@ -45,7 +49,7 @@ HpeApiBuildSession.create = function (session, ciServerId, pipelineId, buildId, 
 };
 
 HpeApiBuildSession.getWorkspaceUri = function (session) {
-  return _util2.default.format('%s/api/shared_spaces/%s/workspaces/%s', session.config.hpeServerUrl, session.config.hpeSharedSpace, session.config.hpeWorkspace);
+  return _url2.default.resolve(session.config.hpeServerUrl, _util2.default.format('/api/shared_spaces/%s/workspaces/%s', session.config.hpeSharedSpace, session.config.hpeWorkspace));
 };
 
 HpeApiBuildSession.reportBuildPipelineStepStatus = function (buildSession, stepId, startTime, duration, status, result) {
