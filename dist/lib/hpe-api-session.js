@@ -44,7 +44,7 @@ HpeApiSession.create = function (hpeApiConfig) {
   var jar = _request2.default.jar();
   var signInRequest = _request2.default.defaults({ jar: jar });
   var options = {
-    uri: _util2.default.format('%s/authentication/sign_in/', hpeApiConfig.hpeServerUrl),
+    uri: _url2.default.resolve(hpeApiConfig.hpeServerUrl, '/authentication/sign_in/'),
     json: true,
     body: {
       user: hpeApiConfig.hpeUser,
