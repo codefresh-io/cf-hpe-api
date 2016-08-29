@@ -65,7 +65,7 @@ describe('HpeApi', function () {
       .createCiServer(this.session, ciServerId, ciServerName)
       .subscribe(
         response => {
-          expect(response.id).to.be.a('number');
+          expect(response.id).to.be.a('string');
           expect(response.instance_id).to.equal(ciServerId);
           expect(response.name).to.equal(ciServerName);
           expect(response.server_type).to.equal('Codefresh');
@@ -82,7 +82,7 @@ describe('HpeApi', function () {
       .findCiServer(this.session, this.ciServerId)
       .subscribe(
         response => {
-          expect(response.id).to.be.a('number');
+          expect(response.id).to.be.a('string');
           expect(response.instance_id).to.equal(this.ciServerId);
           done();
         },
@@ -97,8 +97,8 @@ describe('HpeApi', function () {
       .createPipeline(this.session, this.ciServerHpeId, pipelineId, pipelineName)
       .subscribe(
         response => {
-          expect(response.id).to.be.a('number');
-          expect(response.root_job.id).to.be.a('number');
+          expect(response.id).to.be.a('string');
+          expect(response.root_job.id).to.be.a('string');
           expect(response.ci_server.id).to.equal(this.ciServerHpeId);
           expect(response.name).to.equal(pipelineName);
 
