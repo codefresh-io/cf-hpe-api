@@ -37,7 +37,7 @@ HpeApiSession.create = (hpeApiConfig) => {
 
       return Rx.Observable
         .from(jar.getCookies(hpeApiConfig.hpeServerUrl))
-        .first(cookie => cookie.key === 'HPSSO_COOKIE_CSRF')
+        .first(cookie => cookie.key === 'LWSSO_COOKIE_KEY')
         .map(cookie => cookie.value)
         .map(csrfToken => signInRequest.defaults({
           headers: {

@@ -58,7 +58,7 @@ HpeApiSession.create = function (hpeApiConfig) {
     }
 
     return _rx2.default.Observable.from(jar.getCookies(hpeApiConfig.hpeServerUrl)).first(function (cookie) {
-      return cookie.key === 'HPSSO_COOKIE_CSRF';
+      return cookie.key === 'LWSSO_COOKIE_KEY';
     }).map(function (cookie) {
       return cookie.value;
     }).map(function (csrfToken) {
