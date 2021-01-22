@@ -10,7 +10,7 @@
   "dependencies": {
     "12factor-config": "^1.1.0",
     "immutable": "^3.8.1",
-    "ramda": "^0.21.0",
+    "ramda": "^0.27.1",
     "request": "^2.72.0",
     "rx": "^4.1.0",
     "xml2js": "^0.4.16"
